@@ -234,6 +234,29 @@
             margin-right: auto;
         }      
         
+/* استایل ریسپانسیو برای آپارات */
+.responsive-aparat {
+    position: relative;
+    padding-bottom: 56.25%; /* نسبت تصویر 16:9 */
+    height: 0;
+    overflow: hidden;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.responsive-aparat iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+
+
+
         /* ویژگی‌ها */
         .features-section {
             padding: 80px 0;
@@ -642,15 +665,14 @@
         <div class="container">
             <h2 class="section-title">آموزش کامل پلاگین در 5 دقیقه</h2>
            
-            <div class="video-container">
-                <video controls class="responsive-video">
-                    <source src="https://www.aparat.com/v/oed87c8" type="video/mp4">
-                    مرورگر شما از تگ ویدیو پشتیبانی نمی‌کند.
-                </video>
-                <div class="play-button">
-                    <i class="fas fa-play"></i>
-                </div>
-            </div>
+          <div class="responsive-aparat">
+            <iframe 
+                src="https://www.aparat.com/video/video/embed/videohash/oed87c8/vt/frame" 
+                frameborder="0" 
+                allowfullscreen
+                class="aparat-iframe">
+            </iframe>
+        </div>
 
             <p class="video-description">
                 در این ویدیوی کوتاه و کاربردی، شما با تمام قابلیت‌های حرفه‌ای پلاگین WooAuto Importer آشنا خواهید شد. از نصب و راه‌اندازی تا استفاده پیشرفته از تمام ویژگی‌های این پلاگین قدرتمند را در کمتر از 5 دقیقه یاد بگیرید.
