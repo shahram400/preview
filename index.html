@@ -877,48 +877,52 @@
         const video = document.querySelector('.responsive-video');
         const playButton = document.querySelector('.play-button');
 
-        playButton.addEventListener('click', function() {
-            videoContainer.classList.add('playing');
-            video.play();
-            video.setAttribute('controls', 'true');
-        });
+     
 
-        video.addEventListener('click', function() {
-            if (video.paused) {
-                video.play();
-                videoContainer.classList.add('playing');
-            } else {
-                video.pause();
-                videoContainer.classList.remove('playing');
-            }
-        });
 
         // لایت‌باکس گالری
-        const galleryItems = document.querySelectorAll('.gallery-item');
-        const lightbox = document.querySelector('.lightbox');
-        const lightboxImg = document.querySelector('.lightbox-content');
-        const closeBtn = document.querySelector('.close-btn');
+   
 
-        galleryItems.forEach(item => {
-            item.addEventListener('click', function() {
-                const imgSrc = this.querySelector('img').src;
-                lightboxImg.src = imgSrc;
-                lightbox.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            });
-        });
+// لایت‌باکس گالری - نسخه اصلاح شده
+const galleryItems = document.querySelectorAll('.gallery-item');
+const lightbox = document.querySelector('.lightbox');
+const lightboxImg = document.querySelector('.lightbox-content');
+const closeBtn = document.querySelector('.close-btn');
 
-        closeBtn.addEventListener('click', function() {
-            lightbox.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        });
+// باز کردن لایت‌باکس با کلیک روی تصویر
+galleryItems.forEach(item => {
+    item.addEventListener('click', function(e) {
+        // جلوگیری از اجرای سایر رویدادها
+        e.stopPropagation();
+        
+        const imgSrc = this.querySelector('img').getAttribute('src');
+        if (imgSrc) {
+            lightboxImg.src = imgSrc;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+    });
+});
 
-        lightbox.addEventListener('click', function(e) {
-            if (e.target === lightbox) {
-                lightbox.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
-        });
+// بستن لایت‌باکس
+closeBtn.addEventListener('click', function() {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = 'auto';
+});
+
+// بستن با کلیک خارج از تصویر
+lightbox.addEventListener('click', function(e) {
+    if (e.target === lightbox) {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+});
+
+
+
+
+
+
     </script>
 <script>
     // فعال کردن دکمه بازگشت به بالا
