@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WooAuto Importer - افزونه فروشگاه ساز خودکار محصولات</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --primary-light: #a29bfe;
+            --secondary: #00cec9;
+            --dark: #2d3436;
+            --light: #f5f6fa;
+            --accent: #fd79a8;
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        /* انیمیشن‌ها */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* اسکرول نرم */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* استایل اصلی */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* هدر */
+        header {
+            background: var(--gradient);
+            color: white;
+            padding: 80px 0 120px;
+            clip-path: ellipse(100% 100% at 50% 0%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(255,255,255,0.05)" d="M0,0 L100,0 L100,100 Q50,80 0,100 L0,0 Z"></path></svg>');
+            background-size: 100% 100%;
+            opacity: 0.3;
+        }
+        
+        .header-content {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+            line-height: 1.8;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: var(--primary);
+            padding: 15px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border: 2px solid white;
+        }
+        
+        .cta-button:hover {
+            background: transparent;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        
+        .cta-button.secondary {
+            background: transparent;
+            color: white;
+            margin-right: 15px;
+        }
+        
+        .cta-button.secondary:hover {
+            background: white;
+            color: var(--primary);
+        }
+        
+        /* بخش ویدیو */
+        .video-section {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 50px;
+            color: var(--dark);
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--gradient);
+            margin: 15px auto;
+            border-radius: 2px;
+        }
+        
+        .responsive-video {
+            width: 100%;
+            height: auto;
+            max-height: 500px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .video-container {
+            position: relative;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 2rem;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+
+        .play-button:hover {
+            background: white;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .video-container.playing .play-button {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        @media (max-width: 768px) {
+            .responsive-video {
+                max-height: 350px;
+            }
+            
+            .play-button {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .responsive-video {
+                max-height: 250px;
+            }
+            
+            .play-button {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+        }  
+       
+        .video-description {
+            margin-top: 40px;
+            line-height: 1.8;
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }      
+        
+        /* ویژگی‌ها */
+        .features-section {
+            padding: 80px 0;
+            background: var(--light);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            animation: fadeIn 0.5s ease-out forwards;
+            opacity: 0;
+        }
+        
+        .feature-card:nth-child(1) { animation-delay: 0.1s; }
+        .feature-card:nth-child(2) { animation-delay: 0.2s; }
+        .feature-card:nth-child(3) { animation-delay: 0.3s; }
+        .feature-card:nth-child(4) { animation-delay: 0.4s; }
+        .feature-card:nth-child(5) { animation-delay: 0.5s; }
+        .feature-card:nth-child(6) { animation-delay: 0.6s; }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient);
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            color: white;
+        }
+        
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+        
+        .feature-card:hover .feature-icon {
+            color: white;
+            transform: rotate(10deg) scale(1.1);
+        }
+        
+        .feature-card:hover h3 {
+            color: white;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+            transition: color 0.3s ease;
+        }
+        
+        .feature-card p {
+            line-height: 1.8;
+            transition: color 0.3s ease;
+        }
+        
+        /* گالری */
+        .gallery-section {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 50px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            height: 250px;
+            animation: fadeIn 0.5s ease-out forwards;
+            opacity: 0;
+            cursor: pointer;
+        }
+        
+        .gallery-item:nth-child(1) { animation-delay: 0.1s; }
+        .gallery-item:nth-child(2) { animation-delay: 0.2s; }
+        .gallery-item:nth-child(3) { animation-delay: 0.3s; }
+        .gallery-item:nth-child(4) { animation-delay: 0.4s; }
+        
+        .gallery-item:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            padding: 20px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+        
+        .gallery-caption h3 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        /* لایت باکس */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: var(--accent);
+            transform: scale(1.2);
+        }
+        
+        /* CTA */
+        .cta-section {
+            padding: 100px 0;
+            background: var(--gradient);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .cta-section::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            right: -100px;
+            width: 300px;
+            height: 300px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite 2s;
+        }
+        
+        .cta-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .cta-section p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            opacity: 0.9;
+            line-height: 1.8;
+        }
+        
+        /* فوتر */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 50px 0 20px;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-light);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            opacity: 0.7;
+            font-size: 0.9rem;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        /* دکمه بازگشت به بالا */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--gradient);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 99;
+            cursor: pointer;
+        }
+        
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        
+        /* ریسپانسیو */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .cta-section h2 {
+                font-size: 2rem;
+            }
+            
+            .feature-card {
+                padding: 30px 20px;
+            }
+            
+            .feature-card h3 {
+                font-size: 1.3rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .cta-buttons {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .cta-button.secondary {
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- هدر -->
+    <header>
+        <div class="container" id="home">
+            <div class="header-content">
+                <h1>پلاگین WooAuto Importer</h1>
+                <p class="subtitle">راه‌حلی هوشمندانه برای وارد کردن خودکار محصولات دیجیکالا به فروشگاه ووکامرس شما با تمام جزئیات، تصاویر و مشخصات فنی</p>
+                <div class="cta-buttons">
+                    <a href="#download" class="cta-button secondary"><i class="fas fa-download"></i> دانلود پلاگین</a>
+                    <a href="#video" class="cta-button"><i class="fas fa-play"></i> تماشای ویدیو</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- بخش ویدیو -->
+    <section id="video" class="video-section">
+        <div class="container">
+            <h2 class="section-title">آموزش کامل پلاگین در 5 دقیقه</h2>
+           
+            <div class="video-container">
+                <video controls class="responsive-video">
+                    <source src="Amuzesh_plugin.mp4" type="video/mp4">
+                    مرورگر شما از تگ ویدیو پشتیبانی نمی‌کند.
+                </video>
+                <div class="play-button">
+                    <i class="fas fa-play"></i>
+                </div>
+            </div>
+
+            <p class="video-description">
+                در این ویدیوی کوتاه و کاربردی، شما با تمام قابلیت‌های حرفه‌ای پلاگین WooAuto Importer آشنا خواهید شد. از نصب و راه‌اندازی تا استفاده پیشرفته از تمام ویژگی‌های این پلاگین قدرتمند را در کمتر از 5 دقیقه یاد بگیرید.
+            </p>
+        </div>
+    </section>
+    
+    <!-- ویژگی‌ها -->
+    <section class="features-section" id="features">
+        <div class="container">
+            <h2 class="section-title">چرا WooAuto Importer؟</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>وارد کردن فوق‌سریع</h3>
+                    <p>وارد کردن صدها محصول در کمترین زمان ممکن تنها با یک کلیک</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-images"></i>
+                    </div>
+                    <h3>گالری تصاویر کامل</h3>
+                    <p>دریافت خودکار تمامی تصاویر محصول با کیفیت اصلی از دیجیکالا</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-list-alt"></i>
+                    </div>
+                    <h3>مشخصات فنی حرفه‌ای</h3>
+                    <p>دریافت و نمایش مشخصات فنی محصول به صورت جدول‌بندی شده</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tags"></i>
+                    </div>
+                    <h3>مدیریت هوشمند برندها</h3>
+                    <p>تشخیص خودکار برند محصولات و ایجاد طبقه‌بندی اختصاصی</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <h3>تخفیف خودکار</h3>
+                    <p>امکان اعمال تخفیف درصدی روی تمام محصولات وارد شده</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-filter"></i>
+                    </div>
+                    <h3>فیلتر پیشرفته</h3>
+                    <p>جستجو و فیلتر محصولات بر اساس برند، قیمت و سایر معیارها</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- گالری -->
+    <section class="gallery-section" id="gallery">
+        <div class="container">
+            <h2 class="section-title">نمونه‌هایی از کار با پلاگین</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="Tasvir_asli.jpg" alt="صفحه اصلی پلاگین">
+                    <div class="gallery-caption">
+                        <h3>صفحه مدیریت پلاگین</h3>
+                        <p>رابط کاربری ساده و کاربردی</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="Tasvir_pishnamesh.jpg" alt="پیش‌نمایش محصولات">
+                    <div class="gallery-caption">
+                        <h3>پیش‌نمایش محصولات</h3>
+                        <p>انتخاب محصولات قبل از وارد کردن</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="Tasvir_mahsool.jpg" alt="محصول وارد شده">
+                    <div class="gallery-caption">
+                        <h3>محصول نهایی در ووکامرس</h3>
+                        <p>با تمام جزئیات و تصاویر</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="Moshakhasat.jpg" alt="مشخصات فنی">
+                    <div class="gallery-caption">
+                        <h3>مشخصات فنی محصول</h3>
+                        <p>جدول‌بندی شده و زیبا</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA -->
+    <section id="download" class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>آماده استفاده هستید؟</h2>
+                <p>همین حالا پلاگین را دانلود کنید و فروشگاه ووکامرس خود را با محصولات دیجیکالا گسترش دهید. تنها با یک کلیک !</p>
+                <a href="#" class="cta-button"><i class="fas fa-download"></i> دانلود نسخه 1</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- فوتر -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">WooAuto Importer</div>
+                <div class="footer-links">
+                    <a href="#home">صفحه اصلی</a>
+                    <a href="#video">ویدیو آموزشی</a>
+                    <a href="#features">ویژگی‌ها</a>
+                    <a href="#gallery">گالری</a>
+                    <a href="#download">دانلود</a>
+                </div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+                <div class="copyright">
+                    <p>تمامی حقوق برای توسعه‌دهنده محفوظ است - ارائه شده در ژاکت</p>
+                    <p>طراحی و توسعه: شهرام علی محمدی - نسخه 1</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- دکمه بازگشت به بالا -->
+    <div class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+    
+    <!-- لایت باکس -->
+    <div class="lightbox">
+        <span class="close-btn">&times;</span>
+        <img class="lightbox-content" src="" alt="">
+    </div>
+    
+    <script>
+        // فعال کردن دکمه بازگشت به بالا
+        window.addEventListener('scroll', function() {
+            var backToTop = document.querySelector('.back-to-top');
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('active');
+            } else {
+                backToTop.classList.remove('active');
+            }
+        });
+        
+        // اسکرول نرم برای لینک‌ها
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    const offset = 80;
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - offset;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // انیمیشن‌های اسکرول
+        const animateOnScroll = function() {
+            const elements = document.querySelectorAll('.feature-card, .gallery-item');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementPosition < windowHeight - 100) {
+                    element.style.opacity = '1';
+                }
+            });
+        };
+        
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
+        
+        // دکمه پلی ویدیو
+        const videoContainer = document.querySelector('.video-container');
+        const video = document.querySelector('.responsive-video');
+        const playButton = document.querySelector('.play-button');
+
+        playButton.addEventListener('click', function() {
+            videoContainer.classList.add('playing');
+            video.play();
+            video.setAttribute('controls', 'true');
+        });
+
+        video.addEventListener('click', function() {
+            if (video.paused) {
+                video.play();
+                videoContainer.classList.add('playing');
+            } else {
+                video.pause();
+                videoContainer.classList.remove('playing');
+            }
+        });
+
+        // لایت‌باکس گالری
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const lightbox = document.querySelector('.lightbox');
+        const lightboxImg = document.querySelector('.lightbox-content');
+        const closeBtn = document.querySelector('.close-btn');
+
+        galleryItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const imgSrc = this.querySelector('img').src;
+                lightboxImg.src = imgSrc;
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        closeBtn.addEventListener('click', function() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+
+        lightbox.addEventListener('click', function(e) {
+            if (e.target === lightbox) {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+    </script>
+<script>
+    // فعال کردن دکمه بازگشت به بالا
+    window.addEventListener('scroll', function() {
+        var backToTop = document.querySelector('.back-to-top');
+        if (window.pageYOffset > 300) {
+            backToTop.classList.add('active');
+        } else {
+            backToTop.classList.remove('active');
+        }
+    });
+    
+  
+    document.querySelector('.back-to-top').addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+    
+   
+</script>
+</body>
+</html>
