@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WooAuto Importer - افزونه فروشگاه ساز خودکار محصولات</title>
+    <title>Digi Importer - افزونه هوشمند واردکننده محصولات دیجیکالا به ووکامرس</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
@@ -234,28 +234,25 @@
             margin-right: auto;
         }      
         
-/* استایل ریسپانسیو برای آپارات */
-.responsive-aparat {
-    position: relative;
-    padding-bottom: 56.25%; /* نسبت تصویر 16:9 */
-    height: 0;
-    overflow: hidden;
-    margin-bottom: 20px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-}
+        /* استایل ریسپانسیو برای آپارات */
+        .responsive-aparat {
+            position: relative;
+            padding-bottom: 56.25%; /* نسبت تصویر 16:9 */
+            height: 0;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
 
-.responsive-aparat iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-}
-
-
-
+        .responsive-aparat iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
 
         /* ویژگی‌ها */
         .features-section {
@@ -339,6 +336,116 @@
         .feature-card p {
             line-height: 1.8;
             transition: color 0.3s ease;
+        }
+        
+        /* بخش مراحل کار */
+        .steps-section {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .steps-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .steps-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 31px;
+            height: 100%;
+            width: 4px;
+            background: var(--primary-light);
+            z-index: 1;
+        }
+        
+        .step {
+            position: relative;
+            padding-right: 80px;
+            margin-bottom: 50px;
+            z-index: 2;
+        }
+        
+        .step:last-child {
+            margin-bottom: 0;
+        }
+        
+        .step-number {
+            position: absolute;
+            right: 0;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--gradient);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .step-content {
+            background: var(--light);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .step:hover .step-content {
+            transform: translateX(10px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .step h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .step p {
+            line-height: 1.8;
+        }
+        
+        /* بخش شعارها */
+        .slogan-section {
+            padding: 80px 0;
+            background: var(--gradient);
+            color: white;
+            text-align: center;
+        }
+        
+        .slogan-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .slogan-item {
+            margin-bottom: 40px;
+            animation: fadeIn 0.5s ease-out forwards;
+            opacity: 0;
+        }
+        
+        .slogan-item:nth-child(1) { animation-delay: 0.2s; }
+        .slogan-item:nth-child(2) { animation-delay: 0.4s; }
+        .slogan-item:nth-child(3) { animation-delay: 0.6s; }
+        
+        .slogan-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .slogan-text {
+            font-size: 1.5rem;
+            font-weight: 500;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
         }
         
         /* گالری */
@@ -537,30 +644,6 @@
             color: var(--primary-light);
         }
         
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        
-        .social-links a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            color: white;
-            transition: all 0.3s ease;
-        }
-        
-        .social-links a:hover {
-            background: var(--primary);
-            transform: translateY(-3px);
-        }
-        
         .copyright {
             opacity: 0.7;
             font-size: 0.9rem;
@@ -626,6 +709,20 @@
             .feature-card h3 {
                 font-size: 1.3rem;
             }
+            
+            .step {
+                padding-right: 60px;
+            }
+            
+            .step-number {
+                width: 50px;
+                height: 50px;
+                font-size: 1.3rem;
+            }
+            
+            .slogan-text {
+                font-size: 1.3rem;
+            }
         }
         
         @media (max-width: 480px) {
@@ -642,6 +739,20 @@
             .cta-button.secondary {
                 margin-right: 0;
             }
+            
+            .step {
+                padding-right: 50px;
+            }
+            
+            .step-number {
+                width: 40px;
+                height: 40px;
+                font-size: 1.1rem;
+            }
+            
+            .slogan-text {
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
@@ -650,8 +761,8 @@
     <header>
         <div class="container" id="home">
             <div class="header-content">
-                <h1>پلاگین WooAuto Importer</h1>
-                <p class="subtitle">راه‌حلی هوشمندانه برای وارد کردن خودکار محصولات دیجیکالا به فروشگاه ووکامرس شما با تمام جزئیات، تصاویر و مشخصات فنی</p>
+                <h1>پلاگین Digi Importer</h1>
+                <p class="subtitle">راه‌حل نهایی برای وارد کردن خودکار محصولات دیجیکالا به فروشگاه ووکامرس شما. با یک کلیک، صدها محصول با تمام جزئیات، تصاویر با کیفیت و مشخصات فنی کامل را به فروشگاه خود اضافه کنید.</p>
                 <div class="cta-buttons">
                     <a href="#download" class="cta-button secondary"><i class="fas fa-download"></i> دانلود پلاگین</a>
                     <a href="#video" class="cta-button"><i class="fas fa-play"></i> تماشای ویدیو</a>
@@ -665,17 +776,17 @@
         <div class="container">
             <h2 class="section-title">آموزش کامل پلاگین در 5 دقیقه</h2>
            
-          <div class="responsive-aparat">
-            <iframe 
-                src="https://www.aparat.com/video/video/embed/videohash/oed87c8/vt/frame" 
-                frameborder="0" 
-                allowfullscreen
-                class="aparat-iframe">
-            </iframe>
-        </div>
+            <div class="responsive-aparat">
+                <iframe 
+                    src="https://www.aparat.com/video/video/embed/videohash/oed87c8/vt/frame" 
+                    frameborder="0" 
+                    allowfullscreen
+                    class="aparat-iframe">
+                </iframe>
+            </div>
 
             <p class="video-description">
-                در این ویدیوی کوتاه و کاربردی، شما با تمام قابلیت‌های حرفه‌ای پلاگین WooAuto Importer آشنا خواهید شد. از نصب و راه‌اندازی تا استفاده پیشرفته از تمام ویژگی‌های این پلاگین قدرتمند را در کمتر از 5 دقیقه یاد بگیرید.
+                در این ویدیوی کوتاه و کاربردی، شما با تمام قابلیت‌های حرفه‌ای پلاگین Digi Importer آشنا خواهید شد. از نصب و راه‌اندازی تا استفاده پیشرفته از تمام ویژگی‌های این پلاگین قدرتمند را در کمتر از 5 دقیقه یاد بگیرید.
             </p>
         </div>
     </section>
@@ -683,14 +794,14 @@
     <!-- ویژگی‌ها -->
     <section class="features-section" id="features">
         <div class="container">
-            <h2 class="section-title">چرا WooAuto Importer؟</h2>
+            <h2 class="section-title">ویژگی‌های منحصر به فرد Digi Importer</h2>
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-rocket"></i>
                     </div>
                     <h3>وارد کردن فوق‌سریع</h3>
-                    <p>وارد کردن صدها محصول در کمترین زمان ممکن تنها با یک کلیک</p>
+                    <p>وارد کردن صدها محصول در کمترین زمان ممکن تنها با یک کلیک. سیستم بهینه‌شده برای پردازش سریع حتی در سرورهای معمولی.</p>
                 </div>
                 
                 <div class="feature-card">
@@ -698,7 +809,7 @@
                         <i class="fas fa-images"></i>
                     </div>
                     <h3>گالری تصاویر کامل</h3>
-                    <p>دریافت خودکار تمامی تصاویر محصول با کیفیت اصلی از دیجیکالا</p>
+                    <p>دریافت خودکار تمامی تصاویر محصول با کیفیت اصلی از دیجیکالا و ذخیره آن‌ها در هاست شما بدون وابستگی به لینک‌های خارجی.</p>
                 </div>
                 
                 <div class="feature-card">
@@ -706,7 +817,7 @@
                         <i class="fas fa-list-alt"></i>
                     </div>
                     <h3>مشخصات فنی حرفه‌ای</h3>
-                    <p>دریافت و نمایش مشخصات فنی محصول به صورت جدول‌بندی شده</p>
+                    <p>دریافت و نمایش مشخصات فنی محصول به صورت جدول‌بندی شده و زیبا که برای سئو و جذب مشتری بسیار مناسب است.</p>
                 </div>
                 
                 <div class="feature-card">
@@ -714,7 +825,7 @@
                         <i class="fas fa-tags"></i>
                     </div>
                     <h3>مدیریت هوشمند برندها</h3>
-                    <p>تشخیص خودکار برند محصولات و ایجاد طبقه‌بندی اختصاصی</p>
+                    <p>تشخیص خودکار برند محصولات و ایجاد طبقه‌بندی اختصاصی برای هر برند به صورت خودکار.</p>
                 </div>
                 
                 <div class="feature-card">
@@ -722,7 +833,7 @@
                         <i class="fas fa-percentage"></i>
                     </div>
                     <h3>تخفیف خودکار</h3>
-                    <p>امکان اعمال تخفیف درصدی روی تمام محصولات وارد شده</p>
+                    <p>امکان اعمال تخفیف درصدی روی تمام محصولات وارد شده به صورت یکجا و محاسبه دقیق قیمت نهایی.</p>
                 </div>
                 
                 <div class="feature-card">
@@ -730,7 +841,69 @@
                         <i class="fas fa-filter"></i>
                     </div>
                     <h3>فیلتر پیشرفته</h3>
-                    <p>جستجو و فیلتر محصولات بر اساس برند، قیمت و سایر معیارها</p>
+                    <p>جستجو و فیلتر محصولات بر اساس برند، قیمت، دسته‌بندی و سایر معیارها قبل از وارد کردن.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- بخش مراحل کار -->
+    <section class="steps-section" id="steps">
+        <div class="container">
+            <h2 class="section-title">چگونه کار می‌کند؟</h2>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>جستجوی محصولات</h3>
+                        <p>کلمه کلیدی مورد نظر خود را وارد کنید (مثلاً "گوشی موبایل"). سیستم به صورت خودکار محصولات مرتبط را از دیجیکالا دریافت می‌کند.</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>پیش‌نمایش و انتخاب</h3>
+                        <p>محصولات یافت شده را مشاهده و محصولات مورد نظر خود را انتخاب کنید. می‌توانید قیمت، تخفیف و دسته‌بندی را تنظیم کنید.</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>وارد کردن خودکار</h3>
+                        <p>با یک کلیک، محصولات انتخاب شده با تمام جزئیات شامل تصاویر، توضیحات و مشخصات فنی به فروشگاه شما اضافه می‌شوند.</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>مدیریت محصولات</h3>
+                        <p>محصولات وارد شده را می‌توانید مانند سایر محصولات ووکامرس مدیریت کنید، ویرایش کنید یا حذف نمایید.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- بخش شعارها -->
+    <section class="slogan-section">
+        <div class="container">
+            <div class="slogan-container">
+                <div class="slogan-item">
+                    <div class="slogan-icon"><i class="fas fa-clock"></i></div>
+                    <p class="slogan-text">"صرفه‌جویی در زمان با تبدیل ساعت‌ها کار دستی به دقیقه‌ای کار خودکار"</p>
+                </div>
+                
+                <div class="slogan-item">
+                    <div class="slogan-icon"><i class="fas fa-chart-line"></i></div>
+                    <p class="slogan-text">"افزایش فروش با تنوع محصولات و اطلاعات کامل و حرفه‌ای"</p>
+                </div>
+                
+                <div class="slogan-item">
+                    <div class="slogan-icon"><i class="fas fa-magic"></i></div>
+                    <p class="slogan-text">"جادوی یک کلیک برای پر کردن فروشگاه شما با هزاران محصول"</p>
                 </div>
             </div>
         </div>
@@ -781,8 +954,8 @@
         <div class="container">
             <div class="cta-content">
                 <h2>آماده استفاده هستید؟</h2>
-                <p>همین حالا پلاگین را دانلود کنید و فروشگاه ووکامرس خود را با محصولات دیجیکالا گسترش دهید. تنها با یک کلیک !</p>
-                <a href="#" class="cta-button"><i class="fas fa-download"></i> دانلود نسخه 1</a>
+                <p>همین حالا پلاگین را دانلود کنید و فروشگاه ووکامرس خود را با محصولات دیجیکالا گسترش دهید. تنها با یک کلیک!</p>
+                <a href="#" class="cta-button"><i class="fas fa-download"></i> دانلود Digi Importer</a>
             </div>
         </div>
     </section>
@@ -791,19 +964,14 @@
     <footer>
         <div class="container">
             <div class="footer-content">
-                <div class="footer-logo">WooAuto Importer</div>
+                <div class="footer-logo">Digi Importer</div>
                 <div class="footer-links">
                     <a href="#home">صفحه اصلی</a>
                     <a href="#video">ویدیو آموزشی</a>
                     <a href="#features">ویژگی‌ها</a>
+                    <a href="#steps">مراحل کار</a>
                     <a href="#gallery">گالری</a>
                     <a href="#download">دانلود</a>
-                </div>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-telegram"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-linkedin"></i></a>
                 </div>
                 <div class="copyright">
                     <p>تمامی حقوق برای توسعه‌دهنده محفوظ است - ارائه شده در ژاکت</p>
@@ -857,7 +1025,7 @@
         
         // انیمیشن‌های اسکرول
         const animateOnScroll = function() {
-            const elements = document.querySelectorAll('.feature-card, .gallery-item');
+            const elements = document.querySelectorAll('.feature-card, .gallery-item, .slogan-item');
             
             elements.forEach(element => {
                 const elementPosition = element.getBoundingClientRect().top;
@@ -872,78 +1040,47 @@
         window.addEventListener('scroll', animateOnScroll);
         window.addEventListener('load', animateOnScroll);
         
-        // دکمه پلی ویدیو
-        const videoContainer = document.querySelector('.video-container');
-        const video = document.querySelector('.responsive-video');
-        const playButton = document.querySelector('.play-button');
-
-     
-
-
         // لایت‌باکس گالری
-   
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const lightbox = document.querySelector('.lightbox');
+        const lightboxImg = document.querySelector('.lightbox-content');
+        const closeBtn = document.querySelector('.close-btn');
 
-// لایت‌باکس گالری - نسخه اصلاح شده
-const galleryItems = document.querySelectorAll('.gallery-item');
-const lightbox = document.querySelector('.lightbox');
-const lightboxImg = document.querySelector('.lightbox-content');
-const closeBtn = document.querySelector('.close-btn');
-
-// باز کردن لایت‌باکس با کلیک روی تصویر
-galleryItems.forEach(item => {
-    item.addEventListener('click', function(e) {
-        // جلوگیری از اجرای سایر رویدادها
-        e.stopPropagation();
-        
-        const imgSrc = this.querySelector('img').getAttribute('src');
-        if (imgSrc) {
-            lightboxImg.src = imgSrc;
-            lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-    });
-});
-
-// بستن لایت‌باکس
-closeBtn.addEventListener('click', function() {
-    lightbox.classList.remove('active');
-    document.body.style.overflow = 'auto';
-});
-
-// بستن با کلیک خارج از تصویر
-lightbox.addEventListener('click', function(e) {
-    if (e.target === lightbox) {
-        lightbox.classList.remove('active');
-        document.body.style.overflow = 'auto';
-    }
-});
-
-
-
-
-
-
-    </script>
-<script>
-    // فعال کردن دکمه بازگشت به بالا
-    window.addEventListener('scroll', function() {
-        var backToTop = document.querySelector('.back-to-top');
-        if (window.pageYOffset > 300) {
-            backToTop.classList.add('active');
-        } else {
-            backToTop.classList.remove('active');
-        }
-    });
-    
-  
-    document.querySelector('.back-to-top').addEventListener('click', function() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
+        // باز کردن لایت‌باکس با کلیک روی تصویر
+        galleryItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.stopPropagation();
+                
+                const imgSrc = this.querySelector('img').getAttribute('src');
+                if (imgSrc) {
+                    lightboxImg.src = imgSrc;
+                    lightbox.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
+            });
         });
-    });
-    
-   
-</script>
+
+        // بستن لایت‌باکس
+        closeBtn.addEventListener('click', function() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+
+        // بستن با کلیک خارج از تصویر
+        lightbox.addEventListener('click', function(e) {
+            if (e.target === lightbox) {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // دکمه بازگشت به بالا
+        document.querySelector('.back-to-top').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
 </body>
 </html>
